@@ -5,3 +5,6 @@ package-lock.json
 # Config Files
 config.js
 credentials.js
+
+# Utility Files
+/logs
