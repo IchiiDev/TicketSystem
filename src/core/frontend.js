@@ -54,5 +54,7 @@ clientFrontStartup()
     .then(() => logger.info("All frontend intialized successfully !"))
     .catch(data => {
         logger.error(`Fatal error while initializing "${data.front}" frontend: ${data.error}`);
-        process.exit(1);
+        log4js.shutdown(() => {
+            process.exit(1);
+        });
     });
