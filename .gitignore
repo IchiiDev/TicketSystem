@@ -1,3 +1,7 @@
 # Node Files
 package-lock.json
 /node_modules
+
+# Config Files
+config.js
+credentials.js
