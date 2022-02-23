@@ -10,7 +10,5 @@ api.listen(API_PORT, () => {
     logger.info(`API backend successfully initialized ! Port: ${API_PORT}`);
 }).on("error", e => {
     logger.error(`Fatal error while initializing API backend: ${e.message}`);
-    log4js.shutdown(() => {
-        process.exit(1);
-    });
+    log4js.shutdown(() => process.exit(1));
 });
