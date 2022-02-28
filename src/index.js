@@ -11,3 +11,4 @@ require("./core/frontend");
 // Backend startup
 logger.info("Initializing backend...");
 require("./backend/backend");
+require("./backend/websocket");
