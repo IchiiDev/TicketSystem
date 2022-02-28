@@ -5,4 +5,5 @@ module.exports = {
     UPDATE_SCREEN_PORT: 3003,
     WSS_PORT: 3004,
     DEV_MODE: true, 
+    DEBUG_WS: true,
 }
