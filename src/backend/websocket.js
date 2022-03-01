@@ -1,4 +1,3 @@
-const { json } = require("express/lib/response");
 const log4js = require("log4js");
 const { Server } = require("ws");
 const { WSS_PORT } = require("../../config");
@@ -12,7 +11,7 @@ const server = new Server({ port: WSS_PORT });
 
 server.on("error", (error) => {
     logger.backend.error(`Fatal error on "WebSocket" backend: ${error.message}`);
-    log4js.shutdown((err) => process.exit(1));
+    log4js.shutdown(() => process.exit(1));
 });
 
 server.once("listening", () => {
