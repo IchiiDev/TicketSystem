@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+
+body
+{
+     background-color: #0055ff;
+}
+
+h1[type=Title]{
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    text-align: center;
+    font-family: Lato;
+}
+ 
