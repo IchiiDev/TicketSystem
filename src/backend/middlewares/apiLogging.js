@@ -11,12 +11,12 @@ const logger = log4js.getLogger("api");
  */
 function apiLogging(req, res, next) {
 
-    let ipAddress = req.ip
-    let reqUrl = req.url
-    let reqMethod = req.method
+    let ipAddress = req.ip;
+    let reqUrl = req.url;
+    let reqMethod = req.method;
 
     logger.info(`${ipAddress}: ${reqMethod} ${reqUrl}`);
-    next()
+    next();
 }
 
 module.exports = { apiLogging };

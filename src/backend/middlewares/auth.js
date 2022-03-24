@@ -22,7 +22,7 @@ function Auth(req, res, next) {
 }
 
 function addUser(username, firstname, lastname) {
-    if (LoggedUsers.indexOf(username) > -1) return null
+    if (LoggedUsers.indexOf(username) > -1) return null;
     token = genToken();
     UserData[token] = { username, firstname, lastname };
     LoggedUsers.push(username);
