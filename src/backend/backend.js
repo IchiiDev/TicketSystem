@@ -4,12 +4,14 @@ const log4js = require("log4js");
 const { Auth } = require("./middlewares/auth");
 const { LoginEndpoint } = require("./endpoints/login");
 const bodyParser = require("body-parser");
+const { apiLogging } = require("./middlewares/apiLogging");
 
 const logger = log4js.getLogger("backend");
 
 const api = express();
 
-api.use(bodyParser.json())
+api.use(bodyParser.json());
+api.use(apiLogging);
 api.use(Auth);
 
 // Defining callable endpoints
