@@ -12,7 +12,7 @@ const db = mysql.createConnection({
 });
 
 db.connect((err) => {
-  if (err) logger.error("Fatal error while connecting to the MySQL database: " + err.message);
+  if (err) return logger.error("Fatal error while connecting to the MySQL database: " + err.message);
   logger.info("Connected to the MySQL database !");
 });
 
