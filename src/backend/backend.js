@@ -5,11 +5,13 @@ const { Auth } = require("./middlewares/auth");
 const { LoginEndpoint } = require("./endpoints/login");
 const bodyParser = require("body-parser");
 const { apiLogging } = require("./middlewares/apiLogging");
+const cors = require("cors");
 
 const logger = log4js.getLogger("backend");
 
 const api = express();
 
+api.use(cors())
 api.use(bodyParser.json());
 api.use(apiLogging);
 api.use(Auth);
