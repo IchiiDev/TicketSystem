@@ -14,7 +14,13 @@ function verifier() {
             .then(req => req.json())
             .then(json => {
                 console.log(json)
+                if (json.code !== undefined) return;
+                localStorage.setItem('token', json.token)
+                localStorage.setItem('username', json.username)
+                localStorage.setItem('firstname', json.firstname)
+                localStorage.setItem('lastname', json.lastname)
             })
+
     }
     else{
         alert("Saissisez votre nom d'utilisateur");
