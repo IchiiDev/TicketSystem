@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" media="screen" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Lora:ital,wght@0,500;1,700&display=swap" rel="stylesheet">
     <title>Affichage Opérateur</title>
     <script src="./verificationToken.js"></script>
 </head>
 <body>
     <h1>Affichage Opérateur</h1>
-    <a>Dernier ticket récupéré :</a>
+    <p>Ticket en cours : <b id="ticket">aucun</b></p>
+    <br/>
+    <button type="submit" id="TicketButton" onclick="prendreTicket()" >Prendre un Ticket</button>
     <script>verifierToken()</script>
 </body>
 </html>
