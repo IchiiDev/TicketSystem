@@ -39,4 +39,4 @@ const genToken = () => {
     return crypto.randomBytes(64).toString("base64");
 };
 
-module.exports = { Auth, addUser };
+module.exports = { Auth, addUser, UserData };
