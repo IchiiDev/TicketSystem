@@ -22,12 +22,20 @@ server.once("listening", () => {
 
 server.on("connection", (socket) => {
 
+    socket.sendMessage = data => {
+        socket.send(JSON.stringify(data));
+    }
+
     socket.permission_level = null;
     socket.isAuthed = false;
     setTimeout(() => {
         if (socket.isAuthed) return;
-        socket.close(401, "Authentification timeout.");
+        socket.close();
     }, 10000);
+
+    socket.on("close", () => {
+        if (socket.permission_level === "update_screen") server.update_screen = null;
+    });
 
     socket.on("message", data => {
         data = JSON.parse(data.toString());
@@ -37,10 +45,11 @@ server.on("connection", (socket) => {
                 AuthEndpoint(data, socket);
                 break;
             case "next_ticket":
+                nextTicket(data, socket)
                 break;
             default:
                 logger.websocket.error("Incorrect endpoint from socket: " + data.endpoint);
-                socket.send({code: 404, message: "Unknown endpoint"}.toString());
+                socket.sendMessage({code: 404, message: "Unknown endpoint"});
         }
         
     });
@@ -51,34 +60,34 @@ function AuthEndpoint(data, socket) {
     if (data.token == "update_screen" && !server.update_screen) {
         logger.websocket.info("Client logged in as update_screen.");
         socket.isAuthed = true;
-        socket.send({ code: 200, message: "Authentified, successfully as update_screen" }.toString());
+        socket.sendMessage({ code: 200, message: "Authentified, successfully as update_screen" });
         socket.permission_level = "update_screen";
         server.update_screen = socket;
     } else if (UserData[data.token] !== undefined) {
         logger.websocket.info(`Client logged in as ${UserData[data.token].username}`);
         socket.isAuthed = true;
-        socket.send({ code: 200, message: "Authentified, successfully as " + UserData[data.token].username }.toString());
+        socket.sendMessage({ code: 200, message: "Authentified, successfully as " + UserData[data.token].username });
         socket.permission_level = "operator";
         socket.username = UserData[data.token].username;
     } 
     else {
         logger.websocket.error("Client tried to log in with unknown token !");
-        socket.send({ code: 401, message: "Bad token."}.toString());
+        socket.sendMessage({ code: 401, message: "Bad token."});
     }
 }
 
 function nextTicket(data, socket) {
-    if (socket.permission_level !== "operator") return socket.send({ code: 401, message: "You don't have the permission to do that." }.toString());
+    if (socket.permission_level !== "operator") return socket.sendMessage({ code: 401, message: "You don't have the permission to do that." });
 
-    db.query("SELECT UID, id FROM tickets WHERE active = true LIMIT 1", (err, rows) => {
+    db.query("SELECT UID, display_name FROM tickets WHERE active = true LIMIT 1", (err, rows) => {
         if (err) return logger.backend.error(err.message);
         if (rows.length == 0) {
-            socket.send({ code: 404, message: "No ticket found." }.toString());
-            server.update_screen.send({ code: 404, message: "No ticket found." }.toString());
+            socket.sendMessage({ code: 404, message: "No ticket found." });
+            server.update_screen.sendMessage({ code: 404, message: "No ticket found." });
             return;
         }
-        socket.send({ code: 200, message: rows[0] }.toString());
-        server.update_screen.send({ code: 200, message: rows[1] }.toString());
+        socket.sendMessage({ code: 200, message: rows[0] });
+        server.update_screen.sendMessage({ code: 200, message: rows[1] });
         db.query("UPDATE tickets SET active = false AND operator_name =  ? WHERE UID = ?", [socket.username, socket.rows[0].UID], (err) => {
             if (err) return logger.backend.error(err.message);
         });
