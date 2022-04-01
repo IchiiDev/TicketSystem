@@ -11,7 +11,7 @@ const logger = log4js.getLogger("api");
  * @param {response} res 
  */
 function loginEndpoint(req, res) {
-    
+    if (req.body.username == undefined || req.body.password == undefined) return res.status(400).json({ code: 400, message: "Bad request" });
     db.query(
         "SELECT username, firstname, lastname FROM users WHERE username=? AND password=?", 
         [req.body.username, req.body.password], 
