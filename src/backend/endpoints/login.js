@@ -10,7 +10,7 @@ const logger = log4js.getLogger("api");
  * @param {request} req 
  * @param {response} res 
  */
-function LoginEndpoint(req, res) {
+function loginEndpoint(req, res) {
     
     db.query(
         "SELECT username, firstname, lastname FROM users WHERE username=? AND password=?", 
@@ -37,4 +37,4 @@ function LoginEndpoint(req, res) {
 
 }
 
-module.exports = { LoginEndpoint };
+module.exports = { loginEndpoint };

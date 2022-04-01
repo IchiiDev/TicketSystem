@@ -2,10 +2,11 @@ const express = require("express");
 const { API_PORT } = require("../../config");
 const log4js = require("log4js");
 const { Auth } = require("./middlewares/auth");
-const { LoginEndpoint } = require("./endpoints/login");
+const { loginEndpoint } = require("./endpoints/login");
 const bodyParser = require("body-parser");
 const { apiLogging } = require("./middlewares/apiLogging");
 const cors = require("cors");
+const { renewTokenEndpoint } = require("./endpoints/renew");
 
 const logger = log4js.getLogger("backend");
 
@@ -17,7 +18,8 @@ api.use(apiLogging);
 api.use(Auth);
 
 // Defining callable endpoints
-api.post("/login", LoginEndpoint);
+api.post("/login", loginEndpoint);
+api.get("/renew", renewTokenEndpoint);
 
 api.listen(API_PORT, () => {
     logger.info(`API backend successfully initialized ! Port: ${API_PORT}`);
