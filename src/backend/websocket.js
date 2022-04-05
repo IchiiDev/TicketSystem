@@ -1,6 +1,7 @@
 const log4js = require("log4js");
 const { Server } = require("ws");
 const { WSS_PORT } = require("../../config");
+const { currentDate } = require("../core/functions/currentDate");
 const { db } = require("../core/mysql");
 const { UserData } = require("./middlewares/auth");
 
@@ -79,17 +80,21 @@ function AuthEndpoint(data, socket) {
 function nextTicket(data, socket) {
     if (socket.permission_level !== "operator") return socket.sendMessage({ code: 401, message: "You don't have the permission to do that." });
 
-    db.query("SELECT UID, display_name FROM tickets WHERE active = true LIMIT 1", (err, rows) => {
+    db.query("SELECT UID, display_name FROM tickets WHERE active = 1 LIMIT 1", (err, rows) => {
         if (err) return logger.backend.error(err.message);
         if (rows.length == 0) {
             socket.sendMessage({ code: 404, message: "No ticket found." });
             server.update_screen.sendMessage({ code: 404, message: "No ticket found." });
             return;
         }
-        socket.sendMessage({ code: 200, message: rows[0] });
-        server.update_screen.sendMessage({ code: 200, message: rows[1] });
-        db.query("UPDATE tickets SET active = false AND operator_name =  ? WHERE UID = ?", [socket.username, socket.rows[0].UID], (err) => {
-            if (err) return logger.backend.error(err.message);
+        db.query("UPDATE tickets SET active = 0, operator_name = ?, closed_date = ? WHERE UID = ?", [socket.username, currentDate(), rows[0].UID], (err) => {
+            if (err) {
+                logger.backend.error(err.message);
+                socket.sendMessage({ code: 500, message: "Internal Server Error" });
+                return;
+            }
+            socket.sendMessage({ code: 200, message: rows[0] });
+            server.update_screen.sendMessage({ code: 200, message: rows[1] });
         });
     });
 
