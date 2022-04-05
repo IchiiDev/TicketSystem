@@ -21,6 +21,7 @@ body{
     padding-bottom: 10px;
 }
 
+
 /* Full-width inputs */
 input[type=text], input[type=password] {
     width: 100%;
@@ -45,4 +46,12 @@ button:hover {
     background-color: white;
     color: #53af57;
     border: 1px solid #53af57;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
 }

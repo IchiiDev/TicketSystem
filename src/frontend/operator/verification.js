@@ -13,12 +13,12 @@ function verifier() {
         fetch("http://localhost:3000/login", requete)
             .then(req => req.json())
             .then(json => {
-                console.log(json)
                 if (json.code !== undefined) return;
                 localStorage.setItem('token', json.token)
                 localStorage.setItem('username', json.username)
                 localStorage.setItem('firstname', json.firstname)
                 localStorage.setItem('lastname', json.lastname)
+                location.href = "./"
             })
 
     }
