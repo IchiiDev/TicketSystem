@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const { apiLogging } = require("./middlewares/apiLogging");
 const cors = require("cors");
 const { renewTokenEndpoint } = require("./endpoints/renew");
+const { newTicketEndpoint } = require("./endpoints/newTicket");
 
 const logger = log4js.getLogger("backend");
 
@@ -20,6 +21,7 @@ api.use(Auth);
 // Defining callable endpoints
 api.post("/login", loginEndpoint);
 api.get("/renew", renewTokenEndpoint);
+api.get("/new_ticket", newTicketEndpoint);
 
 api.listen(API_PORT, () => {
     logger.info(`API backend successfully initialized ! Port: ${API_PORT}`);

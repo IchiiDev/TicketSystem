@@ -10,7 +10,7 @@ let LoggedUsers = [];
  * @param {response} res 
  */
 function Auth(req, res, next) {
-    if (req.url == "/login") return next();
+    if (req.url == "/login" || req.url == "/new_ticket") return next();
     
     if (UserData[req.headers.authorization] !== undefined) {
         req.userData = UserData[req.headers.authorization];
