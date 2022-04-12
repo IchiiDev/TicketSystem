@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
-
 
 body{
     background: #67BE4B;
@@ -62,9 +60,3 @@ p {
 h1#ticket {
     margin-top:75px;
 }
-
-h1{
-    text-align: center;
-    font-family: Lato;
-}
- 

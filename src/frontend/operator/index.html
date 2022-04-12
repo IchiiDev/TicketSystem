@@ -10,12 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Lora:ital,wght@0,500;1,700&display=swap" rel="stylesheet">
     <title>Affichage Opérateur</title>
     <script src="./verificationToken.js"></script>
+    <script src="./websocket.js"></script>
 </head>
 <body>
     <h1>Affichage Opérateur</h1>
     <p>Ticket en cours : <b id="ticket">aucun</b></p>
     <br/>
-    <button type="submit" id="TicketButton" onclick="prendreTicket()" >Prendre un Ticket</button>
+    <button type="submit" id="TicketButton" onclick="nextTicket()" >Prendre un Ticket</button>
     <script>verifierToken()</script>
 </body>
 </html>
