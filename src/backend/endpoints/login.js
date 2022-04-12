@@ -13,8 +13,6 @@ const logger = log4js.getLogger("api");
  */
 function loginEndpoint(req, res) {
     if (req.body.username == undefined || req.body.password == undefined) return res.status(400).json({ code: 400, message: "Bad request" });
-    console.log(Object.keys(UserData).length);
-    console.log(DESK_COUNT + 1);
     if (Object.keys(UserData).length >= DESK_COUNT) return res.status(503).json({ code: 503, message: "Service Unavailable: Not enough desks" });
     db.query(
         "SELECT username, firstname, lastname FROM users WHERE username=? AND password=?", 
@@ -36,7 +34,6 @@ function loginEndpoint(req, res) {
                 results[0].desk_number = Object.keys(UserData).length;
                 logger.info(`User ${results[0].username} has logged in.`);
                 res.status(200).json({ code: 200, message: "Authentified", data: results[0] });
-                console.log(results[0]);
             }
 
         });
