@@ -12,7 +12,7 @@ function newTicketEndpoint(req, res) {
             logger.error(err);
             return;
         }
-        res.status(200).json({ code: 200, ticketId: ticketNumber });
+        res.status(200).json({ ticketId: ticketNumber });
         ticketNumber++;
     });
 
