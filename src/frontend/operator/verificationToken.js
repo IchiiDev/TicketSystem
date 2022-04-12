@@ -7,7 +7,9 @@ function verifierToken() {
     fetch("http://localhost:3000/renew", requete)
         .then(req => req.json())
         .then(json => {
-            if (json.code === undefined) return;
+            if (json.code === undefined) {
+                document.getElementById("desk").textContent = localStorage.getItem('desk_number');
+            }
             else {
                 location.href = "./login.html"
             }
