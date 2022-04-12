@@ -98,7 +98,7 @@ function nextTicket(data, socket) {
                 return;
             }
             socket.sendMessage({ code: 200, message: rows[0], endpoint: "next_ticket" });
-            server.update_screen.sendMessage({ code: 200, message: rows[1], endpoint: "next_ticket" });
+            server.update_screen.sendMessage({ code: 200, message: rows[0], endpoint: "next_ticket" });
         });
     });
 
