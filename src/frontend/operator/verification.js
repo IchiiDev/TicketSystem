@@ -3,7 +3,6 @@ function verifier() {
         let username = document.getElementById("username").value
         let mdp = document.getElementById("mdp").value
         mdp = CryptoJS.MD5(mdp).toString()
-        console.log(`${username} ${mdp}`)
         
         var requete = {
                 method : 'POST',
@@ -13,11 +12,12 @@ function verifier() {
         fetch("http://localhost:3000/login", requete)
             .then(req => req.json())
             .then(json => {
-                if (json.code !== undefined) return;
-                localStorage.setItem('token', json.token)
-                localStorage.setItem('username', json.username)
-                localStorage.setItem('firstname', json.firstname)
-                localStorage.setItem('lastname', json.lastname)
+                if (json.code !== 200) return;
+                localStorage.setItem('token', json.data.token)
+                localStorage.setItem('username', json.data.username)
+                localStorage.setItem('firstname', json.data.firstname)
+                localStorage.setItem('lastname', json.data.lastname)
+                localStorage.setItem('desk_number', json.data.desk_number)
                 location.href = "./"
             })
 

@@ -70,6 +70,7 @@ function AuthEndpoint(data, socket) {
         socket.sendMessage({ code: 200, message: "Authentified, successfully as " + UserData[data.token].username, endpoint: "auth" });
         socket.permission_level = "operator";
         socket.username = UserData[data.token].username;
+        socket.desk_number = UserData[data.token].desk_number;
     } 
     else {
         logger.websocket.error("Client tried to log in with unknown token !");
@@ -98,6 +99,7 @@ function nextTicket(data, socket) {
                 return;
             }
             socket.sendMessage({ code: 200, message: rows[0], endpoint: "next_ticket" });
+            rows[0].desk_number = socket.desk_number;
             server.update_screen.sendMessage({ code: 200, message: rows[0], endpoint: "next_ticket" });
         });
     });

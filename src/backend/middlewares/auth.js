@@ -24,7 +24,7 @@ function Auth(req, res, next) {
 function addUser(username, firstname, lastname) {
     if (LoggedUsers.indexOf(username) > -1) return null;
     token = genToken();
-    UserData[token] = { username, firstname, lastname };
+    UserData[token] = { username, firstname, lastname, desk_number: Object.keys(UserData).length + 1 };
     LoggedUsers.push(username);
 
     setTimeout(() => {
