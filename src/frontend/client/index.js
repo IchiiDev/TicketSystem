@@ -7,7 +7,7 @@ function prendreTicket() {
         .then(req => req.json())
         .then(json => {
             if (json.code !== undefined) return;
-            document.getElementById("ticket").textContent = json.ticketId
+            document.getElementById("ticket").textContent = "Ticket n°" + json.ticketId
             
             setTimeout(() => {
                 document.getElementById("ticket").textContent = "";

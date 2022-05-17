@@ -11,7 +11,7 @@ body{
 #login-box {
     width:100%;
     height:250px;
-    padding: 30px;
+    padding: 0px;
     border: 1px solid #f1f1f1;
     background: #fff;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -53,10 +53,15 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    text-align: center;
+}
+
 p {
     text-align: center;
 }
 
 h1#ticket {
-    margin-top:75px;
+    margin-top:55px;
 }
+

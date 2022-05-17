@@ -14,5 +14,7 @@ ws.onmessage = (data) => {
     console.log(data)
     if (data.code != 200) return console.log(data.message);
     if (data.endpoint == "auth") return;
-    document.getElementById("ticket").textContent = data.message.display_name 
+    document.getElementById("ticket").textContent = data.message.display_name
+    document.getElementById("guichet").textContent = "Guichet n°" + data.message.desk_number
 }
+
