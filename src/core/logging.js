@@ -1,6 +1,7 @@
 const log4js = require("log4js");
 const { DEBUG_WS, DEV_MODE } = require("../../config");
 
+// Configuration du systeme de logs
 log4js.configure({
     appenders: { 
         out: { 

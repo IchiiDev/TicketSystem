@@ -4,6 +4,7 @@ const log4js = require("log4js");
 
 const logger = log4js.getLogger("core");
 
+// Configuration de la connection MySQL
 const db = mysql.createConnection({
   host: DB_ACCOUNT.HOST,
   user: DB_ACCOUNT.USERNAME,
@@ -11,6 +12,7 @@ const db = mysql.createConnection({
   database: DB_ACCOUNT.DATABASE
 });
 
+// initialisation de la connection
 db.connect((err) => {
   if (err) return logger.error("Fatal error while connecting to the MySQL database: " + err.message);
   logger.info("Connected to the MySQL database !");

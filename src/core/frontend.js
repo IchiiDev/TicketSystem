@@ -5,6 +5,7 @@ const log4js = require("log4js");
 
 const logger = log4js.getLogger("frontend");
 
+// Lance le frontend du client
 const clientFrontStartup = () => {
     return new Promise((resolve, reject) => {
         let clientFront = express();
@@ -19,6 +20,7 @@ const clientFrontStartup = () => {
     }); 
 };
 
+// Lance le frontend de l'opérateur
 const operatorFrontStartup = () => {
     return new Promise((resolve, reject) => {
         let operatorFront = express();
@@ -33,6 +35,7 @@ const operatorFrontStartup = () => {
     }); 
 };
 
+// Lance le frontend de l'écran de mise à jour
 const updateScreenFrontStartup = () => {
     return new Promise((resolve, reject) => {
         let updateFront = express();

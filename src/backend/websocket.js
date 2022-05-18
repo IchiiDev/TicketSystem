@@ -10,34 +10,41 @@ const logger = {
     backend: log4js.getLogger("backend")
 };
 
-const server = new Server({ port: WSS_PORT });
+const server = new Server({ port: WSS_PORT }); // Initialisation du serveur WebSocket
 
+// Ce code s'exécute dès que le serveur rencontre une erreur
 server.on("error", (error) => {
     logger.backend.error(`Fatal error on "WebSocket" backend: ${error.message}`);
     log4js.shutdown(() => process.exit(1));
 });
 
+// Ce code s'exécute dès que le serveur est prêt
 server.once("listening", () => {
     logger.backend.info(`WebSocket listening on port ${WSS_PORT}`);
 });
 
+// Ce code s'exécute dès que le serveur reçoit une connection
 server.on("connection", (socket) => {
-
+    
+    // Definition des fonctions de communication avec le client (Custom)
     socket.sendMessage = data => {
         socket.send(JSON.stringify(data));
     }
 
     socket.permission_level = null;
     socket.isAuthed = false;
+    // La connection au WebSocket est fermée après 10 secondes sans authentification
     setTimeout(() => {
         if (socket.isAuthed) return;
         socket.close();
     }, 10000);
 
+    // Ce code s'exécute dès que le client coupe la connection
     socket.on("close", () => {
-        if (socket.permission_level === "update_screen") server.update_screen = null;
+        if (socket.permission_level === "update_screen") server.update_screen = null; // Retire l'écran d'actualisation sauvegardé si il se déconnecte
     });
 
+    // Fonction principale du WebSocket
     socket.on("message", data => {
         data = JSON.parse(data.toString());
         
@@ -57,6 +64,7 @@ server.on("connection", (socket) => {
 
 });
 
+// Cette fonction gère les authentifications
 function AuthEndpoint(data, socket) {
     if (data.token == "update_screen" && !server.update_screen) {
         logger.websocket.info("Client logged in as update_screen.");
@@ -78,20 +86,25 @@ function AuthEndpoint(data, socket) {
     }
 }
 
+// Cette fonction retourne le prochain ticket et le communique à l'écran d'actualisation
 function nextTicket(data, socket) {
     if (socket.permission_level !== "operator") return socket.sendMessage({ code: 401, message: "You don't have the permission to do that.", endpoint: "next_ticket" });
 
+    // séléctionne le ticket le moins récent dans la base de donnée SQL
     db.query("SELECT UID, display_name FROM tickets WHERE active = 1 LIMIT 1", (err, rows) => {
+        // Retourne une erreur si la requête a échoué
         if (err) {
             logger.backend.error(err.message);
             socket.sendMessage({ code: 500, message: "Internal Server Error", error: err.message, endpoint: "next_ticket" });
             return;
         }
+        // Renvoie une erreur si aucun ticket n'est ouvert
         if (rows.length == 0) {
             socket.sendMessage({ code: 404, message: "No ticket found.", endpoint: "next_ticket" });
             server.update_screen.sendMessage({ code: 404, message: "No ticket found.", endpoint: "next_ticket" });
             return;
         }
+        // Edite le ticket dans la base de donnée et le renvoie à l'opérateur et à l'écran d'actualisation
         db.query("UPDATE tickets SET active = 0, operator_name = ?, closed_date = ? WHERE UID = ?", [socket.username, currentDate(), rows[0].UID], (err) => {
             if (err) {
                 logger.backend.error(err.message);
