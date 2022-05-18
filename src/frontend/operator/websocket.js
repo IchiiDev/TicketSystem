@@ -1,6 +1,6 @@
 const token = localStorage.getItem("token")
 
-const ws = new WebSocket("ws://project.ichiidev.xyz/ws");
+const ws = new WebSocket("wss://project.ichiidev.xyz/ws");
 
 ws.onopen = () => {
 
