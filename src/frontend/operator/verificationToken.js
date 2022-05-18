@@ -4,7 +4,7 @@ function verifierToken() {
         method : 'GET',
         headers: { 'Content-Type': "application/json", 'Authorization': localStorage.getItem('token') },
     }
-    fetch("http://localhost:3000/renew", requete)
+    fetch("https://project.ichiidev.xyz/api/renew", requete)
         .then(req => req.json())
         .then(json => {
             if (json.code === undefined) {

@@ -1,6 +1,6 @@
 const token = "update_screen";
 
-const ws = new WebSocket("ws://localhost:3004");
+const ws = new WebSocket("ws://project.ichiidev.xyz/ws");
 
 ws.onopen = () => {
 

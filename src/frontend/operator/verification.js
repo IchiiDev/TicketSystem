@@ -9,7 +9,7 @@ function verifier() {
                 headers: { 'Content-Type': "application/json" },
                 body: JSON.stringify({ "username" : username, "password": mdp})
         }
-        fetch("http://localhost:3000/login", requete)
+        fetch("https://project.ichiidev.xyz/api/login", requete)
             .then(req => req.json())
             .then(json => {
                 if (json.code !== 200) return;

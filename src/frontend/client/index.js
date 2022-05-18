@@ -3,7 +3,7 @@ function prendreTicket() {
     var requete = {
         method : 'GET',}
 
-    fetch("http://localhost:3000/new_ticket", requete)
+    fetch("https://project.ichiidev.xyz/api/new_ticket", requete)
         .then(req => req.json())
         .then(json => {
             if (json.code !== undefined) return;
