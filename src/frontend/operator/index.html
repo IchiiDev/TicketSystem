@@ -14,10 +14,14 @@
 </head>
 <body>
     <h1>Affichage Opérateur</h1>
-    <p>Guichet N°<b id="desk">----</b></p>
-    <p>Ticket en cours : <b id="ticket">aucun</b></p>
-    <br/>
-    <button type="submit" id="TicketButton" onclick="nextTicket()" >Prendre un Ticket</button>
-    <script>verifierToken()</script>
+    <div id="container">
+        <div id="affichage">
+            <p>Guichet N°<b id="desk">----</b></p>
+            <p>Ticket en cours : <b id="ticket">aucun</b></p>
+            <br/>
+            <button type="submit" id="TicketButton" onclick="nextTicket()" >Prendre un Ticket</button>
+            <script>verifierToken()</script>
+        </div>
+    </div>
 </body>
 </html>
